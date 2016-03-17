@@ -1,11 +1,4 @@
-/*
-KATHY LAU
-APCS2 PD10
-HW12A -- We Got a Big Ol’ Convoy
-03-14-2016
-*/
-
-public class DLLNode
+﻿public class DLLNode
   {
     private String _cargo; //current node
     private DLLNode _pointer; // points to next Node
@@ -29,7 +22,7 @@ public class DLLNode
 
     public String getCargo() { return _cargo; }
 
-    public DLLNode getPointer() { return _pointer; }
+    public DLLNode getNext() { return _pointer; }
 
     public DLLNode getPrev() { return _prev; }
 
@@ -42,14 +35,14 @@ public class DLLNode
     }
 
 
-    public DLLNode setPointer (LLNode n){
-      DLLNode old = getPointer();
+    public DLLNode setNext (DLLNode n){
+      DLLNode old = getNext();
       _pointer = n;
       return old;
     }
     
-    public DDLNode setPrev (LLNode n){
-      DDLNode old = getPrev();
+    public DLLNode setPrev (DLLNode n){
+      DLLNode old = getPrev();
       _prev = n;
       return old;
     }
@@ -62,17 +55,6 @@ public class DLLNode
 
     public static void main( String[] args ) {
       
-        DLLNode<String> first = new DLLNode<String>( "cat", null );
-      	//Create a new node after the first
-      	first.setNext( new DLLNode<String>( "dog", null ) );
-      	//Create a third node after the second
-      	first.getNext().setNext( new DLLNode<String>( "cow", null ) );
-      	DLLNode temp = first; 
-      	
-      	while( temp != null ) {
-      	    System.out.println( temp );
-      	    temp = temp.getNext();
-    	}
       
     }//end main
 
