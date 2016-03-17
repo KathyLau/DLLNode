@@ -19,9 +19,10 @@ public class DLLNode
       _prev = null;
     }
 
-    public DLLNode(String val, DLLNode next){
+    public DLLNode(String val, DLLNode next, DLLNode prev){
       _cargo = val;
       _pointer = next;
+      _prev = prev;
     }
 
 //ACCESSORS -------------------------------------------------------------------------
@@ -46,6 +47,12 @@ public class DLLNode
       _pointer = n;
       return old;
     }
+    
+    public DDLNode setPrev (LLNode n){
+      DDLNode old = getPrev();
+      _prev = n;
+      return old;
+    }
 
 //STRING -----------------------------------------------------------------------------
 
@@ -54,9 +61,19 @@ public class DLLNode
 //MAIN METHOD--------------------------------------------------------------------------
 
     public static void main( String[] args ) {
-
-
-
-      }//end main
+      
+        DLLNode<String> first = new DLLNode<String>( "cat", null );
+      	//Create a new node after the first
+      	first.setNext( new DLLNode<String>( "dog", null ) );
+      	//Create a third node after the second
+      	first.getNext().setNext( new DLLNode<String>( "cow", null ) );
+      	DLLNode temp = first; 
+      	
+      	while( temp != null ) {
+      	    System.out.println( temp );
+      	    temp = temp.getNext();
+    	}
+      
+    }//end main
 
   }
