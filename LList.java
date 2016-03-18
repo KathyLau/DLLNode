@@ -1,11 +1,7 @@
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-
-
-public class LList implements List {
+public class LList<T> implements List<T> {
 
     //instance vars
-    private DLLNode  _head, _tail; //pointers to first and last nodes
+    private  DLLNode<T>  _head, _tail; //pointers to first and last nodes
     private int _size;
 
     // constructor -- initializes instance vars
@@ -15,23 +11,25 @@ public class LList implements List {
 
 
     //insert a node in front of first node
-    public boolean add( String newVal ) {
+    public boolean add( T newVal ) {
       addLast( newVal );
 	    return true; }
 
 
     //insert a node containing newVal at position index
-    public void add( int index, String newVal ) {
+    public void add( int index, T newVal ) {
 
       	if ( index < 0 || index > size() )
 	         throw new IndexOutOfBoundsException();
-        else if ( index == 0 )
-      	   addFirst( newVal );
         else if ( index == size() )
            addLast( newVal );
+
+        DLLNode<T>  newNode = new  DLLNode<T> ( newVal, null, null ); //make new node
+
+        if ( index == 0 )
+         	   addFirst( newVal );
       	else {
-          DLLNode  newNode = new DLLNode ( newVal, null, null ); //make new node
-    	    DLLNode  tmp = _head; //create alias to head
+            DLLNode<T> tmp = _head; //create alias to head
 
       	    //walk to node at pos - 1
       	    for( int i=0; i < index-1; i++ )
@@ -50,7 +48,7 @@ public class LList implements List {
 
 
     //remove node at pos index, return its cargo
-    public String remove( int index ) {
+    public T remove( int index ) {
 
     	if ( index < 0 || index >= size() )
     	    throw new IndexOutOfBoundsException();
@@ -59,13 +57,13 @@ public class LList implements List {
     	else if ( index == size()-1 )
     	    return removeLast();
     	else {
-    	    DLLNode tmp = _head; //create alias to head
+    	     DLLNode<T> tmp = _head; //create alias to head
 
     	    //walk to node at pos - 1
     	    for( int i=0; i < index-1; i++ ) {
     		      tmp = tmp.getNext();}
     	    //check target node's cargo hold
-    	    String old = tmp.getNext().getCargo();
+    	    T old = tmp.getNext().getCargo();
 
     	    //remove target node
     	    tmp.setNext( tmp.getNext().getNext() );
@@ -79,12 +77,12 @@ public class LList implements List {
     }
 
 
-    public String get( int index ) {
+    public T get( int index ) {
 
       if ( index < 0 || index >= size() )
 	       throw new IndexOutOfBoundsException();
 
-      DLLNode  tmp = _head; //create alias to head
+       DLLNode<T> tmp = _head; //create alias to head
 
       //walk to desired node
     	for( int i=0; i < index; i++ )
@@ -94,18 +92,18 @@ public class LList implements List {
     }
 
 
-    public String set( int index, String newVal ) {
+    public T set( int index, T newVal ) {
 
     	if ( index < 0 || index >= size() )
     	    throw new IndexOutOfBoundsException();
 
-      DLLNode  tmp = _head; //create alias to head
+       DLLNode<T> tmp = _head; //create alias to head
 
       //walk to node at pos - 1
     	for( int i=0; i < index; i++ )
     	    tmp = tmp.getNext();
 
-      String old = tmp.getCargo();
+      T old = tmp.getCargo();
 
       //modify target node's cargo
     	tmp.setCargo( newVal );
@@ -118,9 +116,9 @@ public class LList implements List {
 
 
     //insert new node before first node (prev=null, next=_head)
-    public void addFirst( String newVal ) {
+    public void addFirst( T newVal ) {
 
-      _head = new DLLNode ( newVal, null, _head );
+      _head = new  DLLNode<T> ( newVal, null, _head );
 
     	if ( _size == 0 )
     	    _tail = _head;
@@ -133,9 +131,9 @@ public class LList implements List {
 
 
     //insert new node after last node (prev=_last, next=null)
-    public void addLast( String newVal ) {
+    public void addLast( T newVal ) {
 
-    	_tail = new DLLNode ( newVal, _tail, null );
+    	_tail = new  DLLNode<T> ( newVal, _tail, null );
 
     	if ( _size == 0 )
     	    _head = _tail;
@@ -147,15 +145,15 @@ public class LList implements List {
         }
 
 
-    public String getFirst() { return _head.getCargo(); }
+    public T getFirst() { return _head.getCargo(); }
 
 
-    public String getLast() { return _tail.getCargo(); }
+    public T getLast() { return _tail.getCargo(); }
 
 
-    public String removeFirst() {
+    public T removeFirst() {
 
-       String retVal = getFirst();
+       T retVal = getFirst();
 
         if ( size() == 1 ) {
 	         _head = _tail = null;}
@@ -170,9 +168,9 @@ public class LList implements List {
     }
 
 
-    public String removeLast() {
+    public T removeLast() {
 
-      	String retVal = getLast();
+      	T retVal = getLast();
 
       	if ( size() == 1 ) {
       	    _head = _tail = null;}
@@ -207,31 +205,26 @@ public class LList implements List {
 
   //main method for testing
     public static void main( String[] args ) {
-      LList go = new LList();
+      List<String> test = new LList<String>();
 
-    System.out.println( go );
-    System.out.println( "size: " + go.size() );
+      test.add("clinton");
+      test.add("trump");
+      test.add("kaisch");
+      test.add("cruz");
+      test.add("sander");
+      test.add("rubio");
 
-    go.add("pi");
-    System.out.println( go );
-    System.out.println( "size: " + go.size() );
+  	for( int i=0; i<5; i++ ) {
+  	    int n = (int)( test.size() * Math.random() );
+  	    test.add( n, "V" );
+  	    System.out.println(test);
+  	}
 
-    go.add("eggsdee");
-    System.out.println( go );
-    System.out.println( "size: " + go.size() );
-
-    go.add("frump");
-    System.out.println( go );
-    System.out.println( "size: " + go.size() );
-
-    go.add(2, "lol");
-    System.out.println( go );
-    System.out.println( "pos 2: " + go.get(2) );
-    System.out.println( "size: " + go.size() );
-
-    go.remove(3);
-    System.out.println( go );
-    System.out.println( "size: " + go.size() );
+  	while( test.size() > 0 ) {
+  	    int n = (int)( test.size() * Math.random() );
+  	    test.remove(n);
+  	    System.out.println(test);
+  	}
 
     }
 
