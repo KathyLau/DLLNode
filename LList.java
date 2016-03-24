@@ -5,7 +5,7 @@ public class LList<T> implements List<T> {
     private int _size;
 
     // constructor -- initializes instance vars
-    public LList( ) {
+    public LList() {
 	     _head = _tail = null;
 	     _size = 0;  }
 
